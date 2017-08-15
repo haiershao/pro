@@ -1,0 +1,9 @@
+
+target 'jindouyun' do
+    pod 'Masonry'
+    pod 'BabyBluetooth'
+    pod 'SVProgressHUD'
+    pod 'FMDB'
+    pod 'lottie-ios'
+    pod 'GPUImage'
+end
