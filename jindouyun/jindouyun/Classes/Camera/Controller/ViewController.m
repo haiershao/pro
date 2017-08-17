@@ -113,11 +113,16 @@ typedef void(^onfinish)(BOOL finish);
 @property (copy  , nonatomic) dispatch_queue_t updateFilequeueY;
 @property (copy  , nonatomic) dispatch_queue_t updateFilequeueZ;
 @property (copy  , nonatomic) dispatch_queue_t updateFilequeueZZ;
+@property (weak, nonatomic) IBOutlet UIImageView *batteryImageView;
+
+
 @end
 
 static NSString *searchCellID = @"searchCellID";
 static NSString *rockerCellID = @"rockerCellID";
 static uint32_t  kUpdataFileLength = 0;
+static dispatch_source_t _timer;
+static dispatch_source_t _heartBeatTimer;
 
 @implementation ViewController
 
@@ -292,11 +297,18 @@ static uint32_t  kUpdataFileLength = 0;
     //3秒没收到姿态角，判定蓝牙断开
     [self heartBeat];
 
-    ///////////////////////
+    [self setUpBatteryView];
 }
 
-static dispatch_source_t _timer;
-static dispatch_source_t _heartBeatTimer;
+- (void)setUpBatteryView{
+
+    UIView *batteryView = [[UIView alloc] init];
+    batteryView.backgroundColor = [UIColor greenColor];
+    batteryView.frame = CGRectMake(2, 2, self.batteryImageView.width - 7, self.batteryImageView.height - 4);
+    [self.batteryImageView addSubview:batteryView];
+    
+}
+
 - (void)sendValue{
     
     NSTimeInterval period = 100; //设置时间间隔
@@ -539,7 +551,7 @@ static dispatch_source_t _heartBeatTimer;
             [self writeValue:b length:6];
         }else if (3 == row){
             
-            Byte b[6] = {0XAA,0X60,0X03,0X06,0X04,0x0a};
+            Byte b[6] = {0XAA,0X58,0X03,0X06,0X04,0x0a};
             [self writeValue:b length:6];
         }else if (4 == row){
             
@@ -2888,7 +2900,22 @@ static dispatch_source_t _heartBeatTimer;
     }  
     return str;  
 }
+- (IBAction)restBtnClick:(UIButton *)sender {
+    if (self.characteristic1 != nil) {
+       
+        Byte b[6] = {0XAA,0X5e,0X03,0X09,0X01,0x0a};
+        [self writeValue:b length:6];
+    }
+    
+}
 
+- (IBAction)knowMoreBtnClick:(UIButton *)sender {
+    
+    
+}
+
+
+#pragma 移动摄影
 - (IBAction)travelingShotBtnClick:(UIButton *)sender {
     
     JDYTravelingShoViewController *TravelingShoVc = [JDYTravelingShoViewController travelingShoViewController];

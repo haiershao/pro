@@ -44,7 +44,7 @@
                         <constraint firstItem="VQg-7e-sJn" firstAttribute="top" secondItem="Rfz-5i-yog" secondAttribute="top" constant="15" id="v8E-XV-NRg"/>
                     </constraints>
                 </view>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="invalidName" translatesAutoresizingMaskIntoConstraints="NO" id="IiT-kN-K3m">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="invalidNameL" translatesAutoresizingMaskIntoConstraints="NO" id="IiT-kN-K3m">
                     <rect key="frame" x="156.5" y="197.5" width="62" height="72.5"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="72.5" id="NQb-FY-2bR"/>
@@ -94,7 +94,7 @@
     </objects>
     <resources>
         <image name="backChevron" width="12" height="21"/>
-        <image name="invalidName" width="62" height="72"/>
         <image name="invalidNameH" width="62" height="70"/>
+        <image name="invalidNameL" width="62" height="72"/>
     </resources>
 </document>

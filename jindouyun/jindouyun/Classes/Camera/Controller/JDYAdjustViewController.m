@@ -255,40 +255,26 @@
                                     [self adjustValue:data];
                                 }else if ([temp containsString:@"55aa08"]){
                                     NSLog(@"校准temp %@",temp);
-                                    NSRange range = NSMakeRange(12, 2);
+                                    NSRange range = NSMakeRange(13, 2);
                                     temp = [temp substringWithRange:range];
-                                    self.adjustProgressAlertView = [JDYAdjustProgressAlertView adjustProgressAlertView];
-                                    self.adjustProgressAlertView.frame = CGRectMake(0, 0, screenW, screenH);
-                                    self.adjustProgressAlertView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.5];
-                                    self.adjustProgressAlertView.alertInfoLabel.text = @"正在校准中...";
-                                    [self.view addSubview:self.adjustProgressAlertView];
-                                    self.adjustProgressAlertView.hidden = YES;
                                     
-                                    LHGradientProgress *gradProg = [LHGradientProgress sharedInstance];
-                                    
-                                    CGFloat gradProgW = self.adjustProgressAlertView.progressView.width;
-                                    CGFloat gradProgH = 5;
-                                    CGFloat gradProgX = 0;
-                                    CGFloat gradProgY = self.adjustProgressAlertView.progressView.height - gradProgH;
-                                    gradProg.frame = CGRectMake(gradProgX, gradProgY, gradProgW, gradProgH);
-                                    [gradProg showOnParent:self.adjustProgressAlertView.progressView position:LHProgressPosDown];
-                                    [gradProg setProgress:1];
-                                    [gradProg simulateProgress];
                                     
                                     NSLog(@"校准%@",temp);
                                     JDYFinishAlertView *finishAlertView = [JDYFinishAlertView showInView:self.view];
+                                    finishAlertView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.5];
                                     finishAlertView.hidden = YES;
-                                    if ([temp isEqualToString:@"20"]) {//陀螺仪校准中
-                                        self.adjustProgressAlertView.hidden = NO;
-                                    }else if ([temp isEqualToString:@"21"]){//陀螺仪校准成功
+                                    if ([temp isEqualToString:@"14"]) {//陀螺仪校准中
+
+                                        [self setUpAdjustProgressAlertView];
+                                    }else if ([temp isEqualToString:@"15"]){//陀螺仪校准成功
                                     
                                         finishAlertView.alertInfoLabel.text = @"陀螺仪校准成功";
                                         [self.adjustProgressAlertView removeFromSuperview];
                                         finishAlertView.hidden = NO;
-                                    }else if ([temp isEqualToString:@"30"]){//加速计校准中
+                                    }else if ([temp isEqualToString:@"1e"]){//加速计校准中
                                         
-                                       self.adjustProgressAlertView.hidden = NO;
-                                    }else if ([temp isEqualToString:@"31"]){//加速计校准成功
+                                        [self setUpAdjustProgressAlertView];
+                                    }else if ([temp isEqualToString:@"1f"]){//加速计校准成功
                                         [self.adjustProgressAlertView removeFromSuperview];
                                         finishAlertView.alertInfoLabel.text = @"加速计校准成功";
                                         finishAlertView.hidden = NO;
@@ -305,6 +291,26 @@
         return;
     }
     
+}
+
+- (void)setUpAdjustProgressAlertView{
+
+    self.adjustProgressAlertView = [JDYAdjustProgressAlertView adjustProgressAlertView];
+    self.adjustProgressAlertView.frame = CGRectMake(0, 0, screenW, screenH);
+    self.adjustProgressAlertView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.5];
+    self.adjustProgressAlertView.alertInfoLabel.text = @"正在校准中...";
+    [self.view addSubview:self.adjustProgressAlertView];
+    
+    LHGradientProgress *gradProg = [LHGradientProgress sharedInstance];
+    
+    CGFloat gradProgW = self.adjustProgressAlertView.progressView.width;
+    CGFloat gradProgH = 5;
+    CGFloat gradProgX = 0;
+    CGFloat gradProgY = self.adjustProgressAlertView.progressView.height - gradProgH;
+    gradProg.frame = CGRectMake(gradProgX, gradProgY, gradProgW, gradProgH);
+    [gradProg showOnParent:self.adjustProgressAlertView.progressView position:LHProgressPosDown];
+    [gradProg setProgress:1];
+    [gradProg simulateProgress];
 }
 
 - (void)adjustValue:(NSData *)data{

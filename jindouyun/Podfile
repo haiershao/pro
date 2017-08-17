@@ -6,4 +6,5 @@ target 'jindouyun' do
     pod 'FMDB'
     pod 'lottie-ios'
     pod 'GPUImage'
+    pod 'AFNetworking'
 end
